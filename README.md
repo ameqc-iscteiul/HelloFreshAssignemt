@@ -1,6 +1,6 @@
 # HelloFresh-CaseStudy
 
-This repository contains the answers to the HelloFresh Case assessment (which the guidelines are in the pdf). The folder "recipes-etl" contains the Python code, and the "SQL_statements.txt" contains the SQL queries. 
+This repository contains the answers to the HelloFresh Case assessment (which the guidelines are in the pdf). The folder "recipes-etl" contains the Python code, and the SQL_statements.txt contains the SQL queries. 
 
 In the "recipe-etl" folder, the file open_recipes_local_data.txt contains a list of recipes in JSON format that was previously obtained from https://bnlf-tests.s3.eu-central-1.amazonaws.com/recipes.json, provided in the HelloFrsh Case Study.
 
