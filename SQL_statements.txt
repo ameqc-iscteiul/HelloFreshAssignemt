@@ -1,0 +1,48 @@
+﻿1.
+SELECT DISTINCT p.product_sku
+FROM customers c
+JOIN subscriptions s ON c.id_customer = s.id_customer
+JOIN products p ON s.fk_product_subscribed_to = p.id_product
+WHERE c.email = 'ilovefood83@hotmail.com' AND s.status = 'active'
+
+
+2.
+SELECT DISTINCT c.id_customer
+FROM customers c
+JOIN subscriptions s ON c.id_customer = s.id_customer
+JOIN products p ON s.fk_product_subscribed_to = p.id_product
+JOIN product_families pf ON p.fk_product_family = pf.id_product_family
+WHERE s.subscription_status = 'active' AND pf.product_family_handle = 'classic-box'
+
+
+3.
+SELECT COUNT(DISTINCT s.fk_customer) 
+FROM subscriptions s
+JOIN orders o ON s.id_subscription = o.fk_subscription
+GROUP BY s.fk_customer
+HAVING COUNT(DISTINCT o.fk_product) > 1
+
+
+4.
+SELECT c.id_customer, COUNT(o.id_order) 
+FROM  customers c
+JOIN subscriptions s ON c.id_customer = s.fk_customer
+JOIN orders o ON s.id_subscription = o.fk_subscription
+JOIN products p ON o.fk_product = p.id_product
+WHERE o.delivery_date = CURDATE() - INTERVAL 2 WEEK
+GROUP BY c.id_customer
+
+
+5.
+SELECT c.id_customer, p.product_sku, o.delivery_date, o.purchase_price
+FROM customers c
+JOIN subscriptions s ON c.id_customer_id = s.fk_customer
+JOIN orders o ON s.id_subscription = o.fk_subscription
+JOIN products p ON o.fk_product = p.id_product
+WHERE (s.fk_customer, o.delivery_date) IN (
+        SELECT s.fk_customer, MAX(o.delivery_date)
+        FROM orders o
+        JOIN subscriptions s ON o.fk_subscription = s.id_subscription
+        GROUP BY
+            s.fk_customer
+    ).
